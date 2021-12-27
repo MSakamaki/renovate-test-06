@@ -17,23 +17,7 @@
   "branchConcurrentLimit": 0,
   "packageRules": [
     {
-      "groupName": "Nx Support Packages",
-      "matchManagers": ["npm"],
-      "packageNames": ["@nrwl/packages"],
-      "packagePatterns": [
-        "^eslint$",
-        "^eslint-config-prettier$",
-        "^jest-preset-angular$",
-        "^ts-jest$",
-        "^jest$",
-        "^@ngrx/",
-        "^@angular-eslint/",
-        "^@typescript-eslint/"
-      ],
-      "enabled": false
-    },
-    {
-      "groupName": "@nrwl/nx package group (major or minor)",
+      "groupName": "@nrwl/nx package group (disabled)",
       "matchSourceUrlPrefixes": ["https://github.com/nrwl/nx"],
       "enabled": false
     },
