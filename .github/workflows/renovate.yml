@@ -4,20 +4,6 @@ on:
   # schedule:
   #   - cron: '0/15 * * * *'
 jobs:
-  # renovate-docker:
-  #   runs-on: ubuntu-latest
-  #   container:
-  #     image: renovate/renovate
-  #     options: --user root
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2.0.0
-  #     - name: copy config
-  #       run: cp $GITHUB_WORKSPACE/renovate.config.js /usr/src/app/config.js
-  #     - name: run renovate
-  #       run: renovate
-  #       env:
-  #         RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
   renovate:
     runs-on: ubuntu-latest
     steps:
@@ -28,5 +14,3 @@ jobs:
         with:
           configurationFile: renovate.config.js
           token: ${{ secrets.RENOVATE_TOKEN }}
-      - name: Checkout
-        uses: actions/checkout@v2.0.0
