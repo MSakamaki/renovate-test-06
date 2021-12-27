@@ -87,7 +87,7 @@
       "groupName": "@nrwl/nx package group (major or minor)",
       "packageNames": ["@nrwl/workspace"],
       "matchUpdateTypes": ["major", "minor", "patch"],
-      "matchPackageNames": ["@nrwl/workspace"],
+      "matchPackageNames": [],
       "enabled": true,
       "postUpgradeTasks": {
         "commands": [
