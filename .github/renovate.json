@@ -75,12 +75,13 @@
     {
       "groupName": "@nrwl/nx workspace group (major or minor)",
       "packageNames": ["@nrwl/workspace"],
+      "matchPackageNames": ["@nrwl/workspace"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "enabled": true,
       "postUpgradeTasks": {
         "commands": [
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
-          "(cd frontend && npx nx migrate @nrwl/workspace@{{{currentVersion}}} --from={{{newVersion}}})",
+          "(cd frontend && npx nx migrate @nrwl/workspace@{{{newVersion}}} --from={{{currentVersion}}})",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm i --ignore-scripts)",
           "(cd frontend && sh nx-run-migrations.sh)"
         ],
@@ -98,7 +99,7 @@
       "postUpgradeTasks": {
         "commands": [
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
-          "(cd frontend && FORCE_NG_UPDATE=true npx ng update @angular/material --from={{{currentVersion}}} --to={{{newVersion}}} --migrate-only --allowDirty --force)"
+          "(cd frontend && FORCE_NG_UPDATE=true npx ng update {{{depName}}} --from={{{currentVersion}}} --to={{{newVersion}}} --migrate-only --allowDirty --force)"
         ],
         "fileFilters": ["**/**"]
       }
