@@ -38,8 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: ${{env.NODE-VERSION}}
@@ -66,8 +64,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: ${{env.NODE-VERSION}}
@@ -92,8 +88,6 @@ jobs:
     container: cypress/browsers:node16.5.0-chrome94-ff93
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: ${{env.NODE-VERSION}}
@@ -127,8 +121,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
           node-version: ${{env.NODE-VERSION}}
