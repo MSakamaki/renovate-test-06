@@ -85,7 +85,7 @@
     },
     {
       "groupName": "@nrwl/nx package group (major or minor)",
-      "packageNames": ["@nrwl/workspace"],
+      "packageNames": [],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "matchPackageNames": [],
       "enabled": true,
@@ -110,12 +110,9 @@
     },
     {
       "groupName": "@angular material update group (major or minor)",
-      "packageNames": ["@angular/material"],
+      "packageNames": [],
       "matchUpdateTypes": ["major", "minor"],
-      "matchPackageNames": [
-        "@angular/material",
-        "@angular/cdk"
-      ],
+      "matchPackageNames": [],
       "enabled": true,
       "postUpgradeTasks": {
         "commands": [
