@@ -1,0 +1,153 @@
+# name: pull request
+# on:
+#   push:
+#     branches-ignore:
+#       - main
+#   # pull_request:
+#   #   branches-ignore:
+#   #     - main
+# env:
+#   # キャッシュを強制クリアしたいときに任意の番号に変更してください
+#   CACHE-VERSION: v2
+#   NODE-VERSION: 16
+# jobs:
+#   setup:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-node@v2
+#         with:
+#           node-version: ${{env.NODE-VERSION}}
+#       - name: before cache
+#         working-directory: ./frontend
+#         run: mkdir -p ~/.npm ~/.cache ./frontend/.angular ./frontend/node_modules
+#       - name: Cache node_modules
+#         id: npm_cache_id
+#         uses: actions/cache@v2
+#         with:
+#           path: |
+#             ~/.npm
+#             ~/.cache
+#             ./frontend/.angular
+#             ./frontend/node_modules
+#           key: node-v${{env.NODE-VERSION}}-${{ runner.os }}-${{ hashFiles('**/frontend/package-lock.json') }}-${{env.CACHE-VERSION}}
+#           restore-keys: |
+#             node-
+#       - name: Install
+#         working-directory: ./frontend
+#         if: steps.npm_cache_id.outputs.cache-hit != 'true'
+#         run: npm install
+#   validation:
+#     needs: setup
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#       - uses: actions/setup-node@v2
+#         with:
+#           node-version: ${{env.NODE-VERSION}}
+#       - name: Restore node_modules
+#         id: npm_cache_id
+#         uses: actions/cache@v2
+#         with:
+#           path: |
+#             ~/.npm
+#             ~/.cache
+#             ./frontend/.angular
+#             ./frontend/node_modules
+#           key: node-v${{env.NODE-VERSION}}-${{ runner.os }}-${{ hashFiles('**/frontend/package-lock.json') }}-${{env.CACHE-VERSION}}
+#           restore-keys: |
+#             node-
+#       - name: format check
+#         working-directory: ./frontend
+#         run: npx nx format:check
+#       - name: Affected lint
+#         working-directory: ./frontend
+#         run: npx nx affected --target=lint --base=main --head=HEAD
+#   unit-test:
+#     needs: setup
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#       - uses: actions/setup-node@v2
+#         with:
+#           node-version: ${{env.NODE-VERSION}}
+#       - name: Restore node_modules
+#         id: npm_cache_id
+#         uses: actions/cache@v2
+#         with:
+#           path: |
+#             ~/.npm
+#             ~/.cache
+#             ./frontend/.angular
+#             ./frontend/node_modules
+#           key: node-v${{env.NODE-VERSION}}-${{ runner.os }}-${{ hashFiles('**/frontend/package-lock.json') }}-${{env.CACHE-VERSION}}
+#           restore-keys: |
+#             node-
+#       - name: Affected test
+#         working-directory: ./frontend
+#         run: npx nx affected --target=test --base=main --head=HEAD
+#   e2e-test:
+#     needs: setup
+#     runs-on: ubuntu-latest
+#     container: cypress/browsers:node16.5.0-chrome94-ff93
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#       - uses: actions/setup-node@v2
+#         with:
+#           node-version: ${{env.NODE-VERSION}}
+#       - name: Restore node_modules
+#         id: npm_e2e_cache_id
+#         uses: actions/cache@v2
+#         with:
+#           path: |
+#             ~/.npm
+#             ~/.cache
+#             ./frontend/.angular
+#             ./frontend/node_modules
+#           key: node-e2e-v${{env.NODE-VERSION}}-${{ runner.os }}-${{ hashFiles('**/frontend/package-lock.json') }}-${{env.CACHE-VERSION}}
+#           restore-keys: |
+#             node-
+#       - name: Npm Install
+#         working-directory: ./frontend
+#         if: steps.npm_e2e_cache_id.outputs.cache-hit != 'true'
+#         run: npm install
+#       - name: Affected e2e
+#         working-directory: ./frontend
+#         run: npx nx affected --target=e2e --base=main --head=HEAD
+#       - name: e2e failure
+#         uses: actions/upload-artifact@v2
+#         if: failure()
+#         with:
+#           name: snapshots_diff_output
+#           path: frontend/dist/cypress/apps/client-e2e/**/*
+#   build:
+#     needs: [validation, unit-test, e2e-test]
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#       - uses: actions/setup-node@v2
+#         with:
+#           node-version: ${{env.NODE-VERSION}}
+#       - name: Restore node_modules
+#         id: npm_cache_id
+#         uses: actions/cache@v2
+#         with:
+#           path: |
+#             ~/.npm
+#             ~/.cache
+#             ./frontend/.angular
+#             ./frontend/node_modules
+#           key: node-v${{env.NODE-VERSION}}-${{ runner.os }}-${{ hashFiles('**/frontend/package-lock.json') }}-${{env.CACHE-VERSION}}
+#           restore-keys: |
+#             node-
+#       - name: Affected build
+#         working-directory: ./frontend
+#         run: npx nx affected --target=build --base=main --head=HEAD
