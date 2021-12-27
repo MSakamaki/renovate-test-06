@@ -17,7 +17,7 @@
   "branchConcurrentLimit": 0,
   "packageRules": [
     {
-      "groupName": "@nrwl/nx package group (disabled)",
+      "groupName": "@nrwl/nx workspace group (disabled)",
       "matchSourceUrlPrefixes": ["https://github.com/nrwl/nx"],
       "enabled": false
     },
@@ -53,19 +53,20 @@
       "enabled": false
     },
     {
-      "groupName": "@types packages (minor or patch)",
+      "groupName": "@types packages group (minor or patch)",
       "matchPackagePatterns": ["^@types/"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     },
     {
-      "groupName": "@nrwl/nx package group (major or minor)",
+      "groupName": "@nrwl/nx workspace group (major or minor)",
+      "packageNames": ["@nrwl/workspace"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "enabled": true,
       "postUpgradeTasks": {
         "commands": [
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
-          "(cd frontend && npx nx migrate @nrwl/workspace@latest)",
+          "(cd frontend && npx nx migrate @nrwl/workspace@{{{newVersion}}} --from={{{currentVersion}}})",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm i --ignore-scripts)",
           "(cd frontend && sh nx-run-migrations.sh)"
         ],
@@ -75,12 +76,15 @@
     {
       "groupName": "@angular/material package group (major or minor)",
       "matchUpdateTypes": ["major", "minor"],
+      "matchPackageNames": [
+        "@angular/material",
+        "@angular/cdk"
+      ],
       "enabled": true,
       "postUpgradeTasks": {
         "commands": [
-          "(cd frontend && NG_CLI_ANALYTICS=ci npm ci)",
-          "(cd frontend && npx nx version)",
-          "(cd frontend && FORCE_NG_UPDATE=true npx ng update @angular/material --allowDirty --force)"
+          "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
+          "(cd frontend && FORCE_NG_UPDATE=true npx ng update @angular/material --from={{{currentVersion}}} --to={{{newVersion}}} --migrate-only --allowDirty --force)"
         ],
         "fileFilters": ["**/**"]
       }
