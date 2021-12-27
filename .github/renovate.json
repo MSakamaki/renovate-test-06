@@ -85,38 +85,26 @@
     },
     {
       "groupName": "@nrwl/nx package group (major or minor)",
-      "packageNames": [],
       "matchUpdateTypes": ["major", "minor", "patch"],
-      "matchPackageNames": [],
       "enabled": true,
       "postUpgradeTasks": {
         "commands": [
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
-          "(cd frontend && npx nx version)",
-          "(cd frontend && npx nx --version)",
-          "(cd frontend && cat package.json)",
-          "(cd frontend && cat package-lock.json)",
-          "(cd frontend && npx nx clear-cache)",
-          "(cd frontend && npx nx migrate @nrwl/workspace@13.2)",
+          "(cd frontend && npx nx migrate @nrwl/workspace@latest)",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm i --ignore-scripts)",
-          "(cd frontend && sh nx-run-migrations.sh)",
-          "(cd frontend && npx nx version)",
-          "(cd frontend && npx nx --version)",
-          "(cd frontend && cat package.json)",
-          "(cd frontend && cat package-lock.json)"
+          "(cd frontend && sh nx-run-migrations.sh)"
         ],
         "fileFilters": ["**/**"]
       }
     },
     {
       "groupName": "@angular material update group (major or minor)",
-      "packageNames": [],
       "matchUpdateTypes": ["major", "minor"],
-      "matchPackageNames": [],
       "enabled": true,
       "postUpgradeTasks": {
         "commands": [
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci)",
+          "(cd frontend && npx nx version)",
           "(cd frontend && FORCE_NG_UPDATE=true npx ng update @angular/material --allowDirty --force)"
         ],
         "fileFilters": ["**/**"]
