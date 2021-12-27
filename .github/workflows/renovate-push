@@ -2,7 +2,7 @@ name: Renovate Branch Push
 on:
   push:
     branches:
-      - renovate/*
+      - 'renovate/**'
 env:
   CACHE-VERSION: v1
   NODE-VERSION: 16
