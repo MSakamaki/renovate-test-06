@@ -95,6 +95,7 @@
           "(cd frontend && rm -fr node_modules)",
           "(cd frontend && ls -la)",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
+          "(cd frontend && npx nx version)",
           "(cd frontend && npx nx migrate @nrwl/workspace@latest)",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm i --ignore-scripts)",
           "(cd frontend && sh nx-run-migrations.sh)"
