@@ -91,6 +91,8 @@
       "enabled": true,
       "postUpgradeTasks": {
         "commands": [
+          "(cd frontend && rm -fr ~/.npm ~/.cache)",
+          "(cd frontend && rm -fr node_modules)",
           "(cd frontend && ls -la)",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
           "(cd frontend && npx nx migrate @nrwl/workspace@latest)",
