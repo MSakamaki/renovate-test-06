@@ -14,8 +14,8 @@ module.exports = {
     "^\\(cd frontend && sh nx-run-migrations.sh"
   ],
   trustLevel: "high",
-  logLevel: "debug",
-  logFile: "/var/log/renovate-bot.log",
+  // logLevel: "debug",
+  // logFile: "/var/log/renovate-bot.log",
   baseBranches: ["main"],
   enabledManagers: ["npm", "dockerfile"],
 };
