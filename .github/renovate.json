@@ -10,7 +10,7 @@
   "timezone": "Asia/Tokyo",
   "dependencyDashboardTitle": "依存関係ダッシュボード",
   "enabledManagers": ["npm", "dockerfile"],
-  "rangeStrategy": "update-lockfile",
+  "rangeStrategy": "replace",
   "lockFileMaintenance": {
     "enabled": true
   },
@@ -62,8 +62,8 @@
         "@angular/material",
         "@angular/cdk"
       ],
-      "matchUpdateTypes": ["major", "minor"],
-      "enabled": false
+      "matchUpdateTypes": ["patch","pin","digest","lockFileMaintenance","rollback","bump"],
+      "enabled": true
     },
     {
       "groupName": "typescript (major or minor)",
@@ -98,7 +98,7 @@
       }
     },
     {
-      "groupName": "@angular material update group (major or minor)",
+      "groupName": "@angular/material package group (major or minor)",
       "matchUpdateTypes": ["major", "minor"],
       "enabled": true,
       "postUpgradeTasks": {
