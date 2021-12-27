@@ -80,7 +80,7 @@
       "postUpgradeTasks": {
         "commands": [
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
-          "(cd frontend && npx nx migrate @nrwl/workspace@{{{newVersion}}} --from={{{currentVersion}}})",
+          "(cd frontend && npx nx migrate @nrwl/workspace@{{{currentVersion}}} --from={{{newVersion}}})",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm i --ignore-scripts)",
           "(cd frontend && sh nx-run-migrations.sh)"
         ],
