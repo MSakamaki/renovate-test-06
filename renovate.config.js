@@ -1,6 +1,5 @@
 module.exports = {
   platform: "github",
-  dryRun: true,
   repositories: ["MSakamaki/renovate-test-06"],
   allowPostUpgradeCommandTemplating: true,
   allowedPostUpgradeCommands: [
@@ -14,8 +13,6 @@ module.exports = {
     "^\\(cd frontend && npx nx migrate @nrwl/workspace@latest",
     "^\\(cd frontend && sh nx-run-migrations.sh"
   ],
-  skipInstalls: false,
-  dryRun: false,
   trustLevel: "high",
   logLevel: "debug",
   logFile: "/var/log/renovate-bot.log",
