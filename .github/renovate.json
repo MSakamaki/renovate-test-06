@@ -91,14 +91,19 @@
       "enabled": true,
       "postUpgradeTasks": {
         "commands": [
-          "(cd frontend && rm -fr ~/.npm ~/.cache)",
-          "(cd frontend && rm -fr node_modules)",
-          "(cd frontend && ls -la)",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
           "(cd frontend && npx nx version)",
-          "(cd frontend && npx nx migrate @nrwl/workspace@latest)",
+          "(cd frontend && npx nx --version)",
+          "(cd frontend && npx nx package.json)",
+          "(cd frontend && npx nx package-lock.json)",
+          "(cd frontend && npx nx clear-cache)",
+          "(cd frontend && npx nx migrate @nrwl/workspace@13.2)",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm i --ignore-scripts)",
-          "(cd frontend && sh nx-run-migrations.sh)"
+          "(cd frontend && sh nx-run-migrations.sh)",
+          "(cd frontend && npx nx version)",
+          "(cd frontend && npx nx --version)",
+          "(cd frontend && npx nx package.json)",
+          "(cd frontend && npx nx package-lock.json)"
         ],
         "fileFilters": ["**/**"]
       }
