@@ -1,12 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "baseBranches": ["main"],
-  "dryRun": true,
   "labels": ["dependencies"],
-  "extends": ["config:base"],
-  "ignorePresets": [
-    "group:jestMonorepo"
-  ],
+  "extends": [],
+  "dependencyDashboard": true,
   "timezone": "Asia/Tokyo",
   "dependencyDashboardTitle": "依存関係ダッシュボード",
   "enabledManagers": ["npm", "dockerfile"],
@@ -17,14 +14,36 @@
   "branchConcurrentLimit": 0,
   "packageRules": [
     {
-      "groupName": "@nrwl/nx package group (major or minor)",
+      "packageNames": ["@nrwl/packages"],
+      "packagePatterns": [
+        "^@ngrx/",
+        "^@angular/",
+        "^@angular-eslint/",
+        "^@angular-devkit/",
+        "^typescript",
+        "^jest",
+        "^zone.js",
+        "^tslib",
+        "^rxjs",
+        "^@nrwl/angular",
+        "^@nrwl/cli",
+        "^@nrwl/cypress",
+        "^@nrwl/eslint-plugin-nx",
+        "^@nrwl/jest",
+        "^@nrwl/linter",
+        "^@nrwl/tao"
+      ],
+      "enabled": false,
+      "groupName": "Nx Included"
+    },
+    {
       "packageNames": ["@nrwl/workspace"],
-      "matchUpdateTypes": ["major", "minor", "patch"],
-      "matchPackageNames": ["@nrwl/workspace"],
-      "enabled": true,
+      "packagePatterns": ["^@nrwl/workspace$"],
+      "ignoreDeps": [],
+      "groupName": "Nrwl workspace",
       "postUpgradeTasks": {
         "commands": [
-          "(cd frontend && ls -la)",
+          "(cd frontend && ls -la",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm ci --ignore-scripts)",
           "(cd frontend && npx nx migrate @nrwl/workspace@latest)",
           "(cd frontend && NG_CLI_ANALYTICS=ci npm i --ignore-scripts)",
@@ -32,97 +51,6 @@
         ],
         "fileFilters": ["**/**"]
       }
-    },
-    {
-      "groupName": "Nx Support Packages",
-      "matchManagers": ["npm"],
-      "packageNames": ["@nrwl/packages"],
-      "packagePatterns": [
-        "^eslint$",
-        "^eslint-config-prettier$",
-        "^jest-preset-angular$",
-        "^ts-jest$",
-        "^jest$",
-        "^@ngrx/",
-        "^@angular-eslint/",
-        "^@typescript-eslint/"
-      ],
-      "enabled": false
-    },
-    {
-      "groupName": "@nrwl/nx package group (major or minor)",
-      "matchSourceUrlPrefixes": ["https://github.com/nrwl/nx"],
-      "enabled": false
-    },
-    {
-      "groupName": "@angular/core package group (major or minor)",
-      "matchSourceUrlPrefixes": ["https://github.com/angular/angular"],
-      "matchUpdateTypes": ["major", "minor"],
-      "enabled": false
-    },
-    {
-      "groupName": "@angular/cli package group (major or minor)",
-      "matchPackageNames": [
-        "@angular/cli",
-        "@angular-devkit/architect",
-        "@angular-devkit/build-angular",
-        "@angular-devkit/build-webpack",
-        "@angular-devkit/core",
-        "@angular-devkit/schematics"
-      ],
-      "matchUpdateTypes": ["major", "minor"],
-      "enabled": false
-    },
-    {
-      "groupName": "@angular/material package group (major or minor)",
-      "matchPackageNames": [
-        "@angular/material",
-        "@angular/cdk"
-      ],
-      "matchUpdateTypes": ["major", "minor"],
-      "enabled": false
-    },
-    {
-      "groupName": "typescript (major or minor)",
-      "matchPackageNames": ["typescript"],
-      "matchUpdateTypes": ["major", "minor"],
-      "enabled": false
-    },
-    {
-      "groupName": "rxjs (major)",
-      "matchPackageNames": ["rxjs"],
-      "matchUpdateTypes": ["major", "minor"],
-      "enabled": false
-    },
-    {
-      "groupName": "@types packages (minor or patch)",
-      "matchPackagePatterns": ["^@types/"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
-    },
-    {
-      "groupName": "@angular material update group (major or minor)",
-      "packageNames": ["@angular/material"],
-      "matchUpdateTypes": ["major", "minor"],
-      "matchPackageNames": [
-        "@angular/material",
-        "@angular/cdk"
-      ],
-      "enabled": true,
-      "postUpgradeTasks": {
-        "commands": [
-          "(cd frontend && NG_CLI_ANALYTICS=ci npm ci)",
-          "(cd frontend && FORCE_NG_UPDATE=true npx ng update @angular/material --allowDirty --force)"
-        ],
-        "fileFilters": ["**/**"]
-      }
-    },
-    {
-      "packageNames": ["cypress"],
-      "matchPackageNames": ["cypress"],
-      "matchUpdateTypes": ["major", "minor", "patch"],
-      "enabled": true,
-      "groupName": "Cypress"
     }
   ]
 }
